@@ -130,7 +130,7 @@ const StorePage = ({
   );
 };
 
-export default function Store() {
+export function Store() {
   const [user, setUser] = useState(null);
 
   const mockUser = { name: "Merlin", isAdmin: true };

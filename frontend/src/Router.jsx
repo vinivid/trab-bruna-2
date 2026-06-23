@@ -1,0 +1,35 @@
+import React from 'react';
+import { Navigate, Outlet, createBrowserRouter } from 'react-router';
+import { useAuth } from './context/authContext';
+import { Store } from './components/StorePage/StorePage';
+import { AdminPage } from './components/AdminPage/AdminPage';
+
+const ProtectedRoute = () => {
+  const { usr } = useAuth();
+
+  if (!usr || !usr.isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
+};
+
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Store />,
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: '/admin',
+        element: <AdminPage />,
+      },
+    ],
+  },
+  {
+    path: '*',
+    element: <h2>404 Not Found</h2>,
+  },
+]);

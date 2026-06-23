@@ -1,13 +1,13 @@
 import { ShineButton } from './components/ShineButton/ShineButton'
+import { AuthProvider } from './context/authContext';
+import { router } from './Router';
+import { RouterProvider } from 'react-router';
 
-function App() {
+export function App() {
 
   return (
-    <div>
-      <p>OK</p>
-      <ShineButton>Ok</ShineButton>
-    </div>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>    
   );
 }
-
-export default App
