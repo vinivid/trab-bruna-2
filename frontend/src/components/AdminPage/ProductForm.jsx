@@ -14,18 +14,18 @@ export const ProductForm = ({ onSubmit }) => {
   return (
     <div className="product-form">
       <div className="product-form__field">
-        <label className="product-form__label">Product name</label>
+        <label className="product-form__label">Nome do produto</label>
         <input
           className="product-form__input"
           type="text"
-          placeholder="e.g. Health Potion"
+          placeholder="ex: Poção maldita"
           value={fields.name}
           onChange={set("name")}
         />
       </div>
 
       <div className="product-form__field">
-        <label className="product-form__label">Product image link</label>
+        <label className="product-form__label">Link da imagem do produto</label>
         <input
           className="product-form__input"
           type="url"
@@ -36,10 +36,10 @@ export const ProductForm = ({ onSubmit }) => {
       </div>
 
       <div className="product-form__field">
-        <label className="product-form__label">Product description</label>
+        <label className="product-form__label">Descrição do produto</label>
         <textarea
           className="product-form__input product-form__input--textarea"
-          placeholder="Describe the product..."
+          placeholder="Descreva o produto..."
           value={fields.description}
           onChange={set("description")}
           rows={4}
@@ -47,7 +47,7 @@ export const ProductForm = ({ onSubmit }) => {
       </div>
 
       <div className="product-form__footer">
-        <ShineButton onClick={handleSubmit}>Register</ShineButton>
+        <ShineButton onClick={handleSubmit}>Cadastrar</ShineButton>
       </div>
     </div>
   );

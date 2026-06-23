@@ -1,20 +1,18 @@
 import { useRef } from "react";
 import "./ShineButton.css";
 
-export const ShineButton = ({ children = "Click", onClick }) => {
+export const ShineButton = ({ children, onClick, variant = "primary" }) => {
   const btnRef = useRef(null);
   const shineRef = useRef(null);
-
   const handleMouseMove = (e) => {
     const rect = btnRef.current.getBoundingClientRect();
     shineRef.current.style.left = `${e.clientX - rect.left}px`;
     shineRef.current.style.top = `${e.clientY - rect.top}px`;
   };
-
   return (
     <button
       ref={btnRef}
-      className="shine-btn"
+      className={`shine-btn shine-btn--${variant}`}
       onMouseMove={handleMouseMove}
       onClick={onClick}
     >
@@ -24,13 +22,3 @@ export const ShineButton = ({ children = "Click", onClick }) => {
     </button>
   );
 };
-
-export default function App() {
-  return (
-    <div className="page">
-      <ShineButton onClick={() => alert("clicked!")}>
-        Click me
-      </ShineButton>
-    </div>
-  );
-}

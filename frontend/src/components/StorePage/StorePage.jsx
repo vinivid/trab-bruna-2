@@ -4,47 +4,52 @@ import { ShineButton } from "../ShineButton/ShineButton";
 import { ProductCard } from "../ProductCard/ProductCard";
 import casa from "../../assets/casa.jpg";
 import faust from "../../assets/faustian.jpeg";
+import { useAuth } from "../../context/authContext";
+import { Link } from "react-router";
 
-const Sidebar = ({ isOpen, user, isAdmin, onLogin, onLogout, onToggle }) => (
-  <>
-    <button className="sidebar__toggle" onClick={onToggle} aria-label="Toggle sidebar">
-      <span /><span /><span />
-    </button>
+const Sidebar = ({ isOpen, user, isAdmin, onLogin, onLogout, onToggle }) => {
+  const { usr } = useAuth();
 
-    <aside className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
-      <div className="sidebar__header">
-        <span className="sidebar__logo">⚗️ Poções e soluções</span>
-      </div>
+  return (
+    <>
+      <button className="sidebar__toggle" onClick={onToggle} aria-label="Toggle sidebar">
+        <span /><span /><span />
+      </button>
 
-      <nav className="sidebar__nav">
-        <p className="sidebar__section-label">Navigate</p>
-        <a href="#history" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>📜 História</a>
-        <a href="#products" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>🧪 Produtos</a>
-      </nav>
+      <aside className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
+        <div className="sidebar__header">
+          <span className="sidebar__logo">⚗️ Poções e soluções</span>
+        </div>
 
-      {isAdmin && (
         <nav className="sidebar__nav">
-          <p className="sidebar__section-label">Admin</p>
-          <a href="#admin" className="sidebar__link sidebar__link--admin">🛡️ Admin Panel</a>
+          <p className="sidebar__section-label">Navigate</p>
+          <a href="#history" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>📜 História</a>
+          <a href="#products" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>🧪 Produtos</a>
         </nav>
-      )}
 
-      <div className="sidebar__auth">
-        {user ? (
-          <>
-            <p className="sidebar__user">👤 {user.name}</p>
-            <button className="sidebar__auth-btn" onClick={onLogout}>Log out</button>
-          </>
-        ) : (
-          <button className="sidebar__auth-btn sidebar__auth-btn--login" onClick={onLogin}>Log in</button>
+        {usr && usr.isAdmin && (
+          <nav className="sidebar__nav">
+            <p className="sidebar__section-label">Admin</p>
+            <Link to="/admin" href="#admin" className="sidebar__link sidebar__link--admin"> Administrar</Link>
+          </nav>
         )}
-      </div>
-    </aside>
 
-    {isOpen && <div className="sidebar__backdrop" onClick={onToggle} />}
-  </>
-);
+        <div className="sidebar__auth">
+          {usr ? (
+            <>
+              <p className="sidebar__user">👤 {usr.name}</p>
+              <button className="sidebar__auth-btn" onClick={onLogout}>Log out</button>
+            </>
+          ) : (
+            <Link to="/login" className="sidebar__auth-btn sidebar__auth-btn--login">Log in</Link>
+          )}
+        </div>
+      </aside>
 
+      {isOpen && <div className="sidebar__backdrop" onClick={onToggle} />}
+    </>
+  );
+}
 const StorePage = ({
   historyImageSrc,
   historyImageAlt = "Store image",

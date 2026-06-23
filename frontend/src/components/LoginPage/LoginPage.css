@@ -1,0 +1,92 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #0d0010;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #220135;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 36px 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.login-card__title {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 600;
+  color: #f0e4ff;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-align: center;
+}
+
+.login-card__error {
+  background: rgba(180, 30, 60, 0.25);
+  border: 1px solid rgba(220, 60, 90, 0.4);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  color: #f4a0b0;
+  line-height: 1.5;
+}
+
+.login-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-card__label {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b899d8;
+}
+
+.login-card__input {
+  width: 100%;
+  background: #3d0263;
+  border: 1px solid rgba(180, 100, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #f0e4ff;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.login-card__input::placeholder {
+  color: rgba(176, 140, 210, 0.45);
+}
+
+.login-card__input:focus {
+  border-color: rgba(180, 100, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(180, 100, 255, 0.12);
+}
+
+.login-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 18px;
+  }
+}

@@ -1,42 +1,65 @@
 import { useState } from "react";
-import './ProductForm.css';
+import { useRef } from "react";
+import "./LoginPage.css";
+import { ShineButton } from "../ShineButton/ShineButton";
+import { useAuth } from "../../context/authContext";
+import { useNavigate } from "react-router";
 
-const Login = ({ onSubmit }) => {
-  const [fields, setFields] = useState({ name: "", imageLink: "", description: "" });
+export const LoginPage = () => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const set = (key) => (e) => setFields((prev) => ({ ...prev, [key]: e.target.value }));
+  const { login } = useAuth();
 
-  const handleSubmit = () => {
-    if (onSubmit) onSubmit(fields);
+  const handleLogin = async () => {
+    console.log("Got here")
+    const res = await login(name, password);
+    if (res === 200)
+      navigate("/");
+
+    if (res === 401)
+      setError("Erro no login, senha ou nome errados");
   };
 
   return (
-    <div className="product-form">
-      <div className="product-form__field">
-        <label className="product-form__label">Nome do usuário</label>
-        <input
-          className="product-form__input"
-          type="text"
-          placeholder="João"
-          value={fields.name}
-          onChange={set("name")}
-        />
-      </div>
+    <div className="login-page">
+      <div className="login-card">
+        <h1 className="login-card__title">Login</h1>
 
-      <div className="product-form__field">
-        <label className="product-form__label">Senha</label>
-        <input
-          className="product-form__input"
-          type="password"
-          placeholder="******"
-          value={fields.password}
-          onChange={set("password")}
-        />
-      </div>
+        {error && (
+          <div className="login-card__error">{error}</div>
+        )}
 
-      <div className="product-form__footer">
-        <ShineButton onClick={handleSubmit}>Register</ShineButton>
+        <div className="login-card__field">
+          <label className="login-card__label">Nome</label>
+          <input
+            className="login-card__input"
+            type="text"
+            placeholder="Seu nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div className="login-card__field">
+          <label className="login-card__label">Password</label>
+          <input
+            className="login-card__input"
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        <div className="login-card__footer">
+          <ShineButton onClick={handleLogin}>Login</ShineButton>
+        </div>
       </div>
     </div>
   );
 };
+
+export default LoginPage;

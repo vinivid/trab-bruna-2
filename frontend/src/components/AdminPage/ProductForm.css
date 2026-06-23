@@ -20,7 +20,7 @@
 }
 
 .product-form__input {
-  width: 93%;
+  width: 100%;
   background: #3d0263;
   border: 1px solid rgba(180, 100, 255, 0.2);
   border-radius: 8px;

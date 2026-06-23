@@ -3,6 +3,7 @@ import { Navigate, Outlet, createBrowserRouter } from 'react-router';
 import { useAuth } from './context/authContext';
 import { Store } from './components/StorePage/StorePage';
 import { AdminPage } from './components/AdminPage/AdminPage';
+import { LoginPage } from './components/LoginPage/LoginPage';
 
 const ProtectedRoute = () => {
   const { usr } = useAuth();
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <Store />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   },
   {
     element: <ProtectedRoute />,

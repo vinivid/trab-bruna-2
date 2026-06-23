@@ -1,25 +1,26 @@
-/* ── Page ── */
 .admin-page {
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: 48px 24px;
   background: #0d0010;
+}
+
+.admin-page__col {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .admin-page__card {
   width: 100%;
-  max-width: 480px;
   background: #220135;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 32px 28px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-
-  @media (max-width: 480px) {
-      padding: 24px 18px;
-  }
 }
 
 .admin-page__title {
@@ -29,4 +30,81 @@
   color: #f0e4ff;
   letter-spacing: 0.01em;
   margin: 0 0 28px;
+}
+
+/* ── Product list ── */
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-list__empty {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: rgba(176, 140, 210, 0.5);
+  text-align: center;
+  padding: 16px 0;
+}
+
+.product-list__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #3d0263;
+  border: 1px solid rgba(180, 100, 255, 0.12);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.product-list__thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.product-list__thumb--empty {
+  background: rgba(180, 100, 255, 0.15);
+}
+
+.product-list__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.product-list__name {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f0e4ff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-list__desc {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  color: #b899d8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-list__action {
+  flex-shrink: 0;
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .admin-page { padding: 32px 16px; }
+  .admin-page__card { padding: 24px 18px; }
+  .product-list__row { flex-wrap: wrap; }
+  .product-list__action { width: 100%; display: flex; justify-content: flex-end; }
 }
