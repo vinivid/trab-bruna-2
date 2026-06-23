@@ -2,7 +2,7 @@ import { useRef } from "react";
 import "./ProductCard.css";
 import { ShineButton } from "../ShineButton/ShineButton";
 
-const ProductCard = ({
+export const ProductCard = ({
   name = "Product Name",
   imageSrc,
   imageAlt = "Product image",
@@ -25,17 +25,3 @@ const ProductCard = ({
     </div>
   </div>
 );
-
-export default function App() {
-  return (
-    <div className="page">
-      <ProductCard
-        name="Wireless Headphones"
-        imageSrc="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80"
-        imageAlt="Wireless headphones on a surface"
-        description="Premium sound quality with active noise cancellation. Up to 30 hours of battery life and ultra-comfortable ear cushions for all-day wear."
-        onBuyClick={() => alert("Added to cart!")}
-      />
-    </div>
-  );
-}
