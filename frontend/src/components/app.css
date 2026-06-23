@@ -1,0 +1,6 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: #0d0010;
+}

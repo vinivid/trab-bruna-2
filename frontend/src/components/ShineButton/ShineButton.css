@@ -1,0 +1,80 @@
+.shine-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 26px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #c8d8f0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #7F00FF 50%, #0f3460 100%);
+  border: 1px solid rgba(100, 149, 237, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.12s ease;
+}
+
+.shine-btn:hover {
+  background: linear-gradient(135deg, #1e1e38 0%, #7F00FF 50%, #123a70 100%);
+  border-color: rgba(100, 149, 237, 0.6);
+  box-shadow: 0 0 0 1px rgba(100, 149, 237, 0.6), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.shine-btn:active {
+  transform: scale(0.97);
+}
+
+.shine-btn__radial {
+  position: absolute;
+  pointer-events: none;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100, 149, 237, 0.25) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
+}
+
+.shine-btn:hover .shine-btn__radial {
+  opacity: 1;
+}
+
+.shine-btn__sweep {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100, 149, 237, 0.25) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  transition: none;
+}
+
+.shine-btn:hover .shine-btn__sweep {
+  transform: translateX(340%);
+  transition: transform 0.65s ease;
+}
+
+.shine-btn__label {
+  position: relative;
+  z-index: 1;
+}
