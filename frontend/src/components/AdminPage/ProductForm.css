@@ -51,3 +51,14 @@
   justify-content: flex-end;
   padding-top: 4px;
 }
+
+.product-form__error {
+  background: rgba(180, 30, 60, 0.25);
+  border: 1px solid rgba(220, 60, 90, 0.4);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  color: #f4a0b0;
+  line-height: 1.5;
+}

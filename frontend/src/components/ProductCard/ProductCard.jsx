@@ -3,25 +3,31 @@ import "./ProductCard.css";
 import { ShineButton } from "../ShineButton/ShineButton";
 
 export const ProductCard = ({
-  name = "Product Name",
-  imageSrc,
+  nome = "Product Name",
+  url_img,
   imageAlt = "Product image",
-  description = "No description provided.",
+  desc = "No desc provided.",
+  val,
   onBuyClick,
 }) => (
   <div className="product-card">
-    <h2 className="product-card__name">{name}</h2>
+    <h2 className="product-card__name">{nome}</h2>
 
     <div className="product-card__image-wrapper">
-      <img className="product-card__image" src={imageSrc} alt={imageAlt} />
+      {url_img
+        ? <img className="product-card__image" src={url_img} alt={imageAlt} />
+        : <div className="product-card__image-placeholder" />}
     </div>
 
     <div className="product-card__description">
-      <p>{description}</p>
+      <p>{desc}</p>
     </div>
 
     <div className="product-card__footer">
-      <ShineButton onClick={onBuyClick}>Buy</ShineButton>
+      {val !== undefined && (
+        <span className="product-card__price">{val}</span>
+      )}
+      <ShineButton onClick={onBuyClick}>Comprar</ShineButton>
     </div>
   </div>
 );

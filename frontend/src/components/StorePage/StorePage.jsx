@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./StorePage.css";
 import { ShineButton } from "../ShineButton/ShineButton";
 import { ProductCard } from "../ProductCard/ProductCard";
@@ -7,8 +7,8 @@ import faust from "../../assets/faustian.jpeg";
 import { useAuth } from "../../context/authContext";
 import { Link } from "react-router";
 
-const Sidebar = ({ isOpen, user, isAdmin, onLogin, onLogout, onToggle }) => {
-  const { usr } = useAuth();
+const Sidebar = ({ isOpen, user, onToggle }) => {
+  const { usr, logout } = useAuth();
 
   return (
     <>
@@ -22,9 +22,10 @@ const Sidebar = ({ isOpen, user, isAdmin, onLogin, onLogout, onToggle }) => {
         </div>
 
         <nav className="sidebar__nav">
-          <p className="sidebar__section-label">Navigate</p>
-          <a href="#history" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>📜 História</a>
-          <a href="#products" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>🧪 Produtos</a>
+          <p className="sidebar__section-label">Navegar</p>
+          <a href="#historia" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>📜 História</a>
+          <a href="#produtos" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>🧪 Produtos</a>
+          <a href="#contatos" className="sidebar__link" onClick={() => window.innerWidth < 768 && onToggle()}>🪞 Contatos</a>
         </nav>
 
         {usr && usr.isAdmin && (
@@ -38,10 +39,10 @@ const Sidebar = ({ isOpen, user, isAdmin, onLogin, onLogout, onToggle }) => {
           {usr ? (
             <>
               <p className="sidebar__user">👤 {usr.name}</p>
-              <button className="sidebar__auth-btn" onClick={onLogout}>Log out</button>
+              <button className="sidebar__auth-btn" onClick={() => logout()}>Log out</button>
             </>
           ) : (
-            <Link to="/login" className="sidebar__auth-btn sidebar__auth-btn--login">Log in</Link>
+            <Link to="/login" className="sidebar__auth-btn sidebar__auth-btn--login">Administrador</Link>
           )}
         </div>
       </aside>
@@ -50,34 +51,37 @@ const Sidebar = ({ isOpen, user, isAdmin, onLogin, onLogout, onToggle }) => {
     </>
   );
 }
-const StorePage = ({
-  historyImageSrc,
-  historyImageAlt = "Store image",
-  secondImageSrc,
-  secondImageAlt = "Store image 2",
-  secondText = "",
-  products = [],
-  user,
-  isAdmin,
-  onLogin,
-  onLogout,
-}) => {
+
+export const StorePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const get = async () => {
+      const url = "http://localhost:3000/produtos/"
+      const resp = await fetch(url, {
+        method: "GET"
+      });
+      
+      if (resp.status === 200) {
+        const json = await resp.json();
+        setProducts(json);
+      } 
+    }
+
+    get();
+  }, [])
 
   return (
     <div className="layout">
       <Sidebar
         isOpen={sidebarOpen}
-        user={user}
-        isAdmin={isAdmin}
-        onLogin={onLogin}
-        onLogout={onLogout}
         onToggle={() => setSidebarOpen((v) => !v)}
       />
 
       <main className="main">
 
-        <section id="history" className="section">
+        <section id="historia" className="section">
           <h1 className="section__title">História da loja</h1>
 
           <div className="history__row history__row--text-image">
@@ -105,7 +109,7 @@ const StorePage = ({
 
         <hr className="divider" />
 
-        <section id="products" className="section">
+        <section id="produtos" className="section">
           <h2 className="section__title">Products</h2>
           <div className="products__grid">
             {products.length > 0
@@ -120,13 +124,13 @@ const StorePage = ({
         
         <hr className="divider" />
 
-        <section id="contato" className="section">
+        <section id="contatos" className="section">
           <h2 className="section__title">Contatos</h2>
             <p>
               Minha porta telepatica é 666.128.0451::2666, envie mensagems que eu eventualmente responderei.
             </p>
             <p style={{marginTop: "30px"}}>
-              Para o envio de cartas, coloque como endereço "Lugar presente mas intocavel". Eu recomendo o uso de aguias, considerando as criaturas que rondam onde eu moro.
+              Para o envio de cartas, coloque como endereço "Beco da Última Saída". Eu recomendo o uso de aguias, considerando as criaturas que rondam onde eu moro.
             </p>
         </section>
 
@@ -134,24 +138,3 @@ const StorePage = ({
     </div>
   );
 };
-
-export function Store() {
-  const [user, setUser] = useState(null);
-
-  const mockUser = { name: "Merlin", isAdmin: true };
-
-  return (
-    <StorePage
-      user={user}
-      isAdmin={user?.isAdmin}
-      onLogin={() => setUser(mockUser)}
-      onLogout={() => setUser(null)}
-      products={[
-        { name: "Health Potion", description: "", onBuyClick: () => alert("Health Potion!") },
-        { name: "Mana Potion",   description: "", onBuyClick: () => alert("Mana Potion!")   },
-        { name: "Speed Elixir",  description: "", onBuyClick: () => alert("Speed Elixir!")  },
-        { name: "Shadow Brew",   description: "", onBuyClick: () => alert("Shadow Brew!")   },
-      ]}
-    />
-  );
-}

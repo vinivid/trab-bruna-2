@@ -1,53 +1,59 @@
 import "./AdminPage.css";
 import { ShineButton } from "../ShineButton/ShineButton";
 import { ProductForm } from "./ProductForm";
-import { useState, useRef } from "react";
-
-const ProductList = ({ products }) => {
-  const handleDelete = (product) => {
-    // TODO: wire up your fetch/delete logic here using product.id (or whatever identifier your API uses)
-    console.log("Dog");
-  };
-
-  return (
-    <div className="product-list">
-      {products.length === 0 && (
-        <p className="product-list__empty">No products registered yet.</p>
-      )}
-      {products.map((product, i) => (
-        <div key={product.id ?? i} className="product-list__row">
-          {product.imageLink && (
-            <img className="product-list__thumb" src={product.imageLink} alt={product.name} />
-          )}
-          {!product.imageLink && <div className="product-list__thumb product-list__thumb--empty" />}
-          <div className="product-list__info">
-            <p className="product-list__name">{product.name}</p>
-            <p className="product-list__desc">{product.description}</p>
-          </div>
-          <div className="product-list__action">
-            <ShineButton variant="danger" onClick={() => handleDelete(product)}>Deletar</ShineButton>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
+import { useState, useRef, useEffect } from "react";
+import { useAuth } from "../../context/authContext";
 
 export const AdminPage = () => {
-  const [products, setProducts] = useState([
-    { id: 1, name: "Health Potion", description: "Restores 50 HP.", imageLink: "" },
-    { id: 2, name: "Mana Elixir",   description: "Restores 30 MP.", imageLink: "" },
-  ]);
+  const { authToken } = useAuth();
 
-  const handleRegister = (fields) => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const get = async () => {
+      const url = "http://localhost:3000/produtos/"
+      const resp = await fetch(url, {
+        method: "GET"
+      });
+      
+      if (resp.status === 200) {
+        const json = await resp.json();
+        setProducts(json);
+      } 
+    }
+
+    get();
+  }, [])
+
+  const handleRegister = async (fields) => {
     setProducts((prev) => [...prev, { id: Date.now(), ...fields }]);
+
+    console.log(fields);
+
+    const url = "http://localhost:3000/produtos/"
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { 
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify(fields)
+    });
+
   };
 
-  const handleDelete = (product) => {
-    setProducts((prev) => prev.filter((p) => p.id !== product.id));
-  };
+  const handleDelete = async (product) => {
+    setProducts((prev) => prev.filter((p) => p.nome !== product.nome));
 
-  const onRegister = () => {console.log("");}
+    const url = "http://localhost:3000/produtos/" + product.nome;
+    console.log(url);
+    const res = await fetch(url, {
+      method: "DELETE",
+      headers: { 
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+  };
 
   return (
     <div className="admin-page">
@@ -55,12 +61,31 @@ export const AdminPage = () => {
 
         <div className="admin-page__card">
           <h1 className="admin-page__title">Cadastrar produto</h1>
-          <ProductForm onSubmit={onRegister} />
+          <ProductForm onSubmits={handleRegister} />
         </div>
 
         <div className="admin-page__card">
           <h2 className="admin-page__title">Todos os produtos</h2>
-          <ProductList products={products} />
+            <div className="product-list">
+              {products.length === 0 && (
+                <p className="product-list__empty">Nenhum produto registrado ainda.</p>
+              )}
+              {products.map((product, i) => (
+                <div key={product.id ?? i} className="product-list__row">
+                  {product.url_img && (
+                    <img className="product-list__thumb" src={product.url_img} alt={product.name} />
+                  )}
+                  {!product.url_img && <div className="product-list__thumb product-list__thumb--empty" />}
+                  <div className="product-list__info">
+                    <p className="product-list__name">{product.nome}</p>
+                    <p className="product-list__desc">{product.desc}</p>
+                  </div>
+                  <div className="product-list__action">
+                    <ShineButton variant="danger" onClick={() => handleDelete(product)}>Deletar</ShineButton>
+                  </div>
+                </div>
+              ))}
+            </div>
         </div>
 
       </div>

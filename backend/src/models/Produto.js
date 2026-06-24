@@ -1,0 +1,31 @@
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
+
+const Produto = sequelize.define(
+  "Produto",
+  {
+    nome: {
+      type: DataTypes.TEXT,
+      primaryKey: true,
+      allowNull: false,
+    },
+    url_img: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    desc: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    val: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    }
+  },
+  {
+    tableName: "produtos",
+    timestamps: false,
+  }
+);
+
+export default Produto;

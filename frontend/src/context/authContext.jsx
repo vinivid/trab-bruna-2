@@ -3,48 +3,38 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [usr, setUser] = useState(null);
+  const [usr, setUser] = useState(() => JSON.parse(localStorage.getItem("usr")));
 
   const [authToken, setAuthToken] = useState(() =>
     localStorage.getItem("authToken"),
   );
 
-  const updateAuthToken = () => {
+  const updateThings = (usr, token) => {
     localStorage.setItem("authToken", token);
     setAuthToken(token);
+    localStorage.setItem("usr", JSON.stringify(usr));
+    setUser(usr);
   };
 
-  const login = async (name, password) => {
-    console.log("And here")
-    if (name === "Merigold") {
-      setUser( { name: "Merigold", isAdmin: true } )
-      return 200;
-    }
+  const login = async (password) => {
+    const url = "http://localhost:3000/adm";
 
-    const url = "http://localhost:3001/api/auth/login";
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, password }),
-      });
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        password
+      })
+    });
 
-      switch (response.status) {
-        case 200:
-          const result = await response.json();
-          setUser(result.usr);
-          updateAuthToken(result.token);
-          return true;
-        case 401:
-          return false;
-        default:
-          throw new Error(`Response Login status: ${response.status}`);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      }
-      return "user";
+    switch (resp.status) {
+      case 200: {
+        const json = await resp.json();
+        updateThings({name: "Merigold", isAdmin: true}, json.token);
+        return true;
+      } break;
+      case 401:
+        return false;
     }
   };
 
@@ -54,7 +44,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ usr, authToken, updateAuthToken, login, logout }}>
+    <AuthContext.Provider value={{ usr, authToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

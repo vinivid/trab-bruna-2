@@ -6,7 +6,6 @@ import { useAuth } from "../../context/authContext";
 import { useNavigate } from "react-router";
 
 export const LoginPage = () => {
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -14,34 +13,21 @@ export const LoginPage = () => {
   const { login } = useAuth();
 
   const handleLogin = async () => {
-    console.log("Got here")
-    const res = await login(name, password);
-    if (res === 200)
-      navigate("/");
-
-    if (res === 401)
-      setError("Erro no login, senha ou nome errados");
+    const res = await login(password);
+    if (res) 
+      navigate("/")
+    else
+      setError("Você não sabe o segredo");
   };
 
   return (
     <div className="login-page">
       <div className="login-card">
-        <h1 className="login-card__title">Login</h1>
+        <h1 className="login-card__title">Entrada de administrador</h1>
 
         {error && (
           <div className="login-card__error">{error}</div>
         )}
-
-        <div className="login-card__field">
-          <label className="login-card__label">Nome</label>
-          <input
-            className="login-card__input"
-            type="text"
-            placeholder="Seu nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
 
         <div className="login-card__field">
           <label className="login-card__label">Password</label>
