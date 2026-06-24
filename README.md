@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-**OBS: O backende roda na porta 3000 em localhost, então é necessário ter esta porta aberta.**
+**OBS: O backend roda na porta 3000 em localhost, então é necessário ter esta porta aberta.**
 Após estes três comandos, o backend estra funcionando.
 
 Agora para o frontend temos
@@ -31,7 +31,7 @@ Com isso, tanto o front end como o backend estão rodando.
 
 # Acessar administrador
 
-Para acessaro a administração, basta colocar a senha:
+Para acessar a administração, basta colocar a senha:
 
 1234
 
