@@ -110,7 +110,7 @@ export const StorePage = () => {
         <hr className="divider" />
 
         <section id="produtos" className="section">
-          <h2 className="section__title">Products</h2>
+          <h2 className="section__title">Produtos</h2>
           <div className="products__grid">
             {products.length > 0
               ? products.map((p, i) => (

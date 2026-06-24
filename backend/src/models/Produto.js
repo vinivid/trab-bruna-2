@@ -11,15 +11,15 @@ const Produto = sequelize.define(
     },
     url_img: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
     desc: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
     val: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false,
     }
   },
   {

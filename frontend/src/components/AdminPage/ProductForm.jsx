@@ -4,21 +4,20 @@ import "./ProductForm.css";
 
 export const ProductForm = ({ onSubmits }) => {
   const [fields, setFields] = useState({ nome: "", url_img: "", desc: "", val: "" });
-  const [error, setError] = useState("");
+  const [error, setError] = useState([true, true, true, true]);
 
   const set = (key) => (e) => setFields((prev) => ({ ...prev, [key]: e.target.value }));
 
   const handleSubmit = async () => {
-    if (error === "") {
+    if (error.includes(true) === "") {
       await onSubmits(fields);
     }
   };
 
   return (
     <div className="product-form">
-      {(error !== "") && (
-        <div className="product-form__error">{error}</div>
-      )}
+
+      <div className="product-form__error">Todos os campos precisam ser preenchidos</div>
 
       <div className="product-form__field">
         <label className="product-form__label">Nome do produto</label>
@@ -28,8 +27,8 @@ export const ProductForm = ({ onSubmits }) => {
           placeholder="ex: Poção maldita"
           value={fields.nome}
           onChange={(s) => {
-            if (s === "") setError("Todos os campos precisam ser preenchidos");
-            else setError("");
+            if (s.target.value === "") setError(error.map((v, i) => i == 0 ? true : v));
+            else setError(error.map((v, i) => i == 0 ? false : v));
             set("nome")(s)
           }}
         />
@@ -43,8 +42,8 @@ export const ProductForm = ({ onSubmits }) => {
           placeholder="https://..."
           value={fields.url_img}
           onChange={(s) => {
-            if (s === "") setError("Todos os campos precisam ser preenchidos");
-            else setError("");
+            if (s.target.value === "") setError(error.map((v, i) => i == 1 ? true : v));
+            else setError(error.map((v, i) => i == 1 ? false : v));
             set("url_img")(s);
           }}
         />
@@ -57,8 +56,8 @@ export const ProductForm = ({ onSubmits }) => {
           placeholder="Descreva o produto..."
           value={fields.desc}
           onChange={(s) => {
-            if (s === "") setError("Todos os campos precisam ser preenchidos");
-            else setError("");    
+            if (s.target.value === "") setError(error.map((v, i) => i == 2 ? true : v));
+            else setError(error.map((v, i) => i == 2 ? false : v));  
             set("desc")(s)
           }}
           rows={4}
@@ -72,15 +71,15 @@ export const ProductForm = ({ onSubmits }) => {
           placeholder="ex: 500 moedas"
           value={fields.val}
           onChange={(s) => {
-            if (s === "") setError("Todos os campos precisam ser preenchidos");
-            else setError("");    
+            if (s.target.value === "") setError(error.map((v, i) => i == 3 ? true : v));
+            else setError(error.map((v, i) => i == 3 ? false : v));  
             set("val")(s);
           }}
         />
       </div>
 
       <div className="product-form__footer">
-        <ShineButton  onClick={handleSubmit}>Cadastrar</ShineButton>
+        <ShineButton disabled={error.includes(true)} onClick={handleSubmit}>Cadastrar</ShineButton>
       </div>
     </div>
   );

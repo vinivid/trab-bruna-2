@@ -30,10 +30,10 @@ export const LoginPage = () => {
         )}
 
         <div className="login-card__field">
-          <label className="login-card__label">Password</label>
+          <label className="login-card__label">Senha</label>
           <input
             className="login-card__input"
-            type="password"
+            type="Senha"
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

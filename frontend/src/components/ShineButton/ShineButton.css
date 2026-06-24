@@ -80,3 +80,9 @@
 }
 
 .shine-btn__label { position: relative; z-index: 1; }
+
+.shine-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}

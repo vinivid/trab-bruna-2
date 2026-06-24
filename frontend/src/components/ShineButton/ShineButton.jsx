@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import "./ShineButton.css";
 
-export const ShineButton = ({ children, onClick, variant = "primary" }) => {
+export const ShineButton = ({ children, onClick, variant = "primary", disabled = false }) => {
   const btnRef = useRef(null);
   const shineRef = useRef(null);
   const handleMouseMove = (e) => {
@@ -15,6 +15,7 @@ export const ShineButton = ({ children, onClick, variant = "primary" }) => {
       className={`shine-btn shine-btn--${variant}`}
       onMouseMove={handleMouseMove}
       onClick={onClick}
+      disabled={disabled}
     >
       <span ref={shineRef} className="shine-btn__radial" />
       <span className="shine-btn__sweep" />
